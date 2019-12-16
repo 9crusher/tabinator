@@ -1,50 +1,51 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import vscode from 'vscode';
-import {getAllFiles } from './utils';
-import fs from 'fs';
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+import vscode, { InputBoxOptions, QuickPickOptions } from 'vscode';
+import {replaceTabsWithSpaces, replaceSpacesWithTabs, getUrisByExtensions} from './utils';
+
+
 export function activate(context: vscode.ExtensionContext) {
 
-	let disposable = vscode.commands.registerCommand('extension.tabsToSpaces',() => {
-        getConversionQuantity()
-        .then((conversionQuantity) => convertTabsToSpaces([".java"], conversionQuantity ? +conversionQuantity : 2))
-    });
-	context.subscriptions.push(disposable);
+	let tabsToSpacesDisposable = vscode.commands.registerCommand('extension.tabsToSpaces', async () => {
+		const conversionQuantity = await getConversionQuantity();
+		const fileTypesCsv = await getFileExtensions();
+		if(fileTypesCsv){
+			convertTabsToSpaces(fileTypesCsv.split(','), conversionQuantity ? +conversionQuantity : 4);
+		}
+	});
+	
+	let spacesToTabsDisposable = vscode.commands.registerCommand('extension.spacesToTabs', async () => {
+		const conversionQuantity = await getConversionQuantity();
+		const fileTypesCsv = await getFileExtensions();
+		if(fileTypesCsv){
+			convertSpacesToTabs(fileTypesCsv.split(','), conversionQuantity ? +conversionQuantity : 4);
+		}
+	});
+	
+	context.subscriptions.push(tabsToSpacesDisposable);
+	context.subscriptions.push(spacesToTabsDisposable);
 }
 
-function convertTabsToSpaces(fileExtensions: string[], conversionQuantity: number){
-    const files = getWorkspaceFiles(fileExtensions);
-    files.forEach((file) => convertFileTabsToSpaces(file, conversionQuantity));
+async function convertTabsToSpaces(fileExtensions: string[], conversionQuantity: number){
+	const files = await getUrisByExtensions(fileExtensions);
+    files.forEach((file) => replaceTabsWithSpaces(file, conversionQuantity));
 }
 
-function convertFileTabsToSpaces(filePath: string, conversionQuantity: number){
-    let spaceString = '';
-    new Array(conversionQuantity).forEach(() => spaceString += '&nbsp;');
-    const newFileContents = vscode.workspace.fs.
-    readFileSync(filePath).toString().replace(/\t/g, spaceString);
-    fs.appendFileSync(filePath, newFileContents);
+async function convertSpacesToTabs(fileExtensions: string[], conversionQuantity: number){
+    const files = await getUrisByExtensions(fileExtensions);
+    files.forEach((file) => replaceSpacesWithTabs(file, conversionQuantity));
 }
 
-function convertFileSpacesToTabs(filePath: string, conversionQuantity: number){
-    let spaceString = '';
-    new Array(conversionQuantity).forEach(() => spaceString += '&nbsp;');
-    const newFileContents = fs.readFileSync(filePath).toString().replace(spaceString, '\t');
-    fs.appendFileSync(filePath, newFileContents);
+ function getConversionQuantity() {
+	 const options: QuickPickOptions = {
+		 placeHolder: 'Enter the number of spaces in a tab'
+	 };
+    return vscode.window.showQuickPick(["1", "2", "3", "4", "6", "8"], options);
 }
 
- function getConversionQuantity(){
-    return vscode.window.showQuickPick(["1", "2", "3", "4", "6", "8"]);
+function getFileExtensions(){
+
+	const inputBoxOptions: InputBoxOptions = {
+		prompt: 'Enter comma-seperated file types to be modified e.g. "java,txt,cpp"'
+	};
+	return vscode.window.showInputBox(inputBoxOptions);
+
 }
-
-function getWorkspaceFiles(fileExtensions: string[]){
-    const workspaceFolders = vscode.workspace.workspaceFolders;
-    const folderPaths = workspaceFolders ? workspaceFolders.map((folder) =>
-        folder.uri) : [];
-    return getAllFiles(folderPaths, fileExtensions);
-}
-
-
-// this method is called when your extension is deactivated
-export function deactivate() {}
