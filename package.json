@@ -24,11 +24,11 @@
     "contributes": {
         "commands": [
             {
-                "command": "extension.tabsToSpaces",
+                "command": "tabinator.tabsToSpaces",
                 "title": "Tabs To Spaces"
             },
             {
-                "command": "extension.spacesToTabs",
+                "command": "tabinator.spacesToTabs",
                 "title": "Spaces To Tabs"
             }
         ]
