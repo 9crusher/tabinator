@@ -2,7 +2,8 @@
     "name": "tabinator",
     "displayName": "tabinator",
     "publisher": "9crusher",
-    "icon": "assets/icon.jpg",
+	"icon": "assets/icon.jpg",
+	"license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/9crusher/tabinator.git"
