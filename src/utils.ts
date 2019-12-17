@@ -20,23 +20,23 @@ export const replaceTabsWithSpaces = async(uri: Uri, spacesInATab: number) => {
 };
 
 export const replaceSpacesWithTabs = async(uri: Uri, spacesInATab: number ) => {
-	const originalFileContents = await workspace.fs.readFile(uri);
-	const newFileContents: LinkedList<number> = new LinkedList();
-	let spaceCount = 0;
-	originalFileContents.forEach(char => {
- 		if(char === 32) {
-			spaceCount++;
-			if(spaceCount === spacesInATab) {
-				newFileContents.append(9);
-				spaceCount = 0;
-			} 
-		} else {
-			addSpaces(newFileContents, spaceCount);
-			newFileContents.append(char);
-			spaceCount = 0;
-		}
-	});
-	addSpaces(newFileContents, spaceCount);
+    const originalFileContents = await workspace.fs.readFile(uri);
+    const newFileContents: LinkedList<number> = new LinkedList();
+    let spaceCount = 0;
+    originalFileContents.forEach(char => {
+         if(char === 32) {
+            spaceCount++;
+            if(spaceCount === spacesInATab) {
+                newFileContents.append(9);
+                spaceCount = 0;
+            } 
+        } else {
+            addSpaces(newFileContents, spaceCount);
+            newFileContents.append(char);
+            spaceCount = 0;
+        }
+    });
+    addSpaces(newFileContents, spaceCount);
     await workspace.fs.writeFile(uri, new Uint8Array(newFileContents.toArray()));
 };
 

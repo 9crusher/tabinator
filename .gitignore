@@ -105,3 +105,7 @@ dist
 
 #vscode
 .vscode/
+
+#publish
+out/
+*.vsix
