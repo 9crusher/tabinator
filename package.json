@@ -2,14 +2,14 @@
     "name": "tabinator",
     "displayName": "tabinator",
     "publisher": "9crusher",
-	"icon": "assets/icon.jpg",
-	"license": "MIT",
+    "icon": "assets/icon.jpg",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/9crusher/tabinator.git"
     },
     "description": "Quickly convert tabs to spaces in all files of your project",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "engines": {
         "vscode": "^1.39.0"
     },
