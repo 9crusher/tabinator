@@ -4,7 +4,7 @@ import {replaceTabsWithSpaces, replaceSpacesWithTabs, getUrisByExtensions} from 
 
 export function activate(context: vscode.ExtensionContext) {
 
-	let tabsToSpacesDisposable = vscode.commands.registerCommand('extension.tabsToSpaces', async () => {
+	let tabsToSpacesDisposable = vscode.commands.registerCommand('tabinator.tabsToSpaces', async () => {
 		const conversionQuantity = await getConversionQuantity();
 		const fileTypesCsv = await getFileExtensions();
 		if(fileTypesCsv){
@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 	
-	let spacesToTabsDisposable = vscode.commands.registerCommand('extension.spacesToTabs', async () => {
+	let spacesToTabsDisposable = vscode.commands.registerCommand('tabinator.spacesToTabs', async () => {
 		const conversionQuantity = await getConversionQuantity();
 		const fileTypesCsv = await getFileExtensions();
 		if(fileTypesCsv){

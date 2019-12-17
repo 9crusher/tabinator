@@ -1,6 +1,9 @@
 {
 	"name": "tabinator",
 	"displayName": "tabinator",
+	"publisher": "9crusher",
+	"icon": "LanguageCCPP_color_128x.png",
+	"repository": {"type": "git", "url": "https://github.com/9crusher/tabinator.git" },
 	"description": "Quickly convert tabs to spaces in all files of you project",
 	"version": "0.0.1",
 	"engines": {
@@ -10,8 +13,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.tabsToSpaces",
-		"onCommand:extension.spacesToTabs"
+		"onCommand:tabinator.tabsToSpaces",
+		"onCommand:tabinator.spacesToTabs"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
