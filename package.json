@@ -9,7 +9,7 @@
         "url": "https://github.com/9crusher/tabinator.git"
     },
     "description": "Quickly convert tabs to spaces in all files of your project",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "engines": {
         "vscode": "^1.39.0"
     },
@@ -20,7 +20,7 @@
         "onCommand:tabinator.tabsToSpaces",
         "onCommand:tabinator.spacesToTabs"
     ],
-    "main": "./out/extension.js",
+    "main": "./out/tabinator.js",
     "contributes": {
         "commands": [
             {
@@ -34,7 +34,8 @@
         ]
     },
     "scripts": {
-        "vscode:prepublish": "yarn run compile",
+        "prepublish": "yarn run compile",
+        "publish": "vsce package && vsce publish",
         "compile": "tsc -p ./"
     },
     "devDependencies": {
